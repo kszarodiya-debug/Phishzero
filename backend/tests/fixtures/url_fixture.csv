@@ -1,0 +1,13 @@
+url,label
+https://www.example.com/,benign
+https://www.example.com/account/settings,benign
+https://docs.example.org/guide/security,benign
+https://mail.example.net/inbox,benign
+https://support.example.com/help/contact,benign
+https://store.example.org/products/item-42,benign
+http://bit.ly/verify-account,phishing
+http://tinyurl.com/reset-now,phishing
+http://198.51.100.42/login,phishing
+http://secure-login.example.com@198.51.100.7/verify,phishing
+http://account-security.example.com/update-password,phishing
+http://free-prize.example.net/claim-now-2026,phishing

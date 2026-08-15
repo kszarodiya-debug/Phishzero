@@ -1,0 +1,14 @@
+subject,body,label
+"Team meeting agenda","The team meeting starts at ten and the agenda is attached.",ham
+"Project status update","Here is the project status update for this week.",ham
+"Lunch plans","Would you like to meet for lunch tomorrow?",ham
+"Invoice for approved work","The approved invoice is included for your records.",ham
+"Travel confirmation","Your approved travel itinerary is ready.",ham
+"Service maintenance notice","Scheduled maintenance will happen tonight.",ham
+"You won a cash prize","Claim your cash prize now by completing the reward form.",spam
+"Urgent account warning","Your account will be closed unless you verify immediately.",spam
+"Exclusive investment offer","Earn guaranteed returns with this secret investment opportunity.",spam
+"Free gift card waiting","Click to receive your free gift card before the offer expires.",spam
+"Congratulations selected winner","You were selected to receive an unexpected reward.",spam
+"Limited time medication deal","Buy discounted medication today with no prescription.",spam
+
