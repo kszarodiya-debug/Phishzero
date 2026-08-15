@@ -48,7 +48,12 @@ function Logo() {
 }
 
 export default function Showcase() {
-  return <div className="min-h-screen overflow-hidden bg-slate-950 text-slate-100">
+  return <div className="hacker-theme relative min-h-screen overflow-hidden bg-slate-950 text-slate-100">
+    <div className="binary-overlay" aria-hidden="true">
+      <span className="binary-stream binary-stream-a">1010 0110 1101 0011 0101 1110 1001 0110 0010 1100 1010 0101 1111 0001 1010 0111 1100 0011 0101 1001 0110 1110 0010 1011 0100 1101 1000 0111 1010 0011 1110 0101 1001 1100 0010 1011 0110 1111 0001 1010 0100</span>
+      <span className="binary-stream binary-stream-b">0101 1100 0011 1010 0111 1001 1110 0100 1011 0010 1101 0110 1000 1111 0001 1010 0101 1100 0011 1011 0110 1001 1110 0100 1010 0111 1101 0010 1001 0110 1111 0001 1010 0101 1100 0011</span>
+      <span className="binary-stream binary-stream-c">1101 0010 1011 0100 1110 0001 1001 0110 0101 1010 0011 1100 0111 1000 1010 0101 1110 0011 1001 0110 1101 0010 1011 0100 1111 0001 1010 0111 1100 0011 0101 1001</span>
+    </div>
     <header className="sticky top-0 z-20 border-b border-slate-800/80 bg-slate-950/85 backdrop-blur-xl">
       <div className="mx-auto flex h-20 max-w-7xl items-center justify-between px-5 sm:px-8 lg:px-10">
         <a href="#top" aria-label="PhishZero home"><Logo /></a>
@@ -61,7 +66,7 @@ export default function Showcase() {
       </div>
     </header>
 
-    <main id="top">
+    <main id="top" className="relative z-10">
       <section className="relative isolate border-b border-slate-800/80 bg-grid">
         <div className="absolute inset-x-0 top-0 -z-10 h-96 bg-[radial-gradient(ellipse_at_top,rgba(34,211,238,0.16),transparent_65%)]" />
         <div className="mx-auto grid max-w-7xl gap-16 px-5 pb-24 pt-20 sm:px-8 lg:grid-cols-[1.05fr_0.95fr] lg:items-center lg:px-10 lg:pb-32 lg:pt-28">
@@ -108,6 +113,6 @@ export default function Showcase() {
       <section id="architecture" className="border-t border-slate-800/80 bg-slate-900/30"><div className="mx-auto max-w-7xl px-5 py-20 sm:px-8 lg:px-10"><div className="flex flex-col justify-between gap-8 sm:flex-row sm:items-end"><div><p className="text-xs font-bold uppercase tracking-[0.2em] text-cyan-300">Built for the hackathon floor</p><h2 className="mt-4 text-3xl font-semibold tracking-tight text-white">A focused security story, backed by a real pipeline.</h2></div><a className="inline-flex items-center gap-2 text-sm font-semibold text-cyan-300 hover:text-cyan-200" href={GITHUB_URL} target="_blank" rel="noreferrer">Inspect the source <Icon name="arrow" className="h-4 w-4" /></a></div><div className="mt-12 grid gap-3 text-sm sm:grid-cols-2 lg:grid-cols-4"><div className="rounded-2xl border border-slate-800 bg-slate-950/60 p-5"><p className="text-slate-500">Frontend</p><p className="mt-2 font-semibold text-white">React · Vite · Tailwind</p></div><div className="rounded-2xl border border-slate-800 bg-slate-950/60 p-5"><p className="text-slate-500">Backend</p><p className="mt-2 font-semibold text-white">FastAPI · SQLAlchemy</p></div><div className="rounded-2xl border border-slate-800 bg-slate-950/60 p-5"><p className="text-slate-500">ML layer</p><p className="mt-2 font-semibold text-white">TF-IDF · Random Forest</p></div><div className="rounded-2xl border border-slate-800 bg-slate-950/60 p-5"><p className="text-slate-500">Decision</p><p className="mt-2 font-semibold text-white">Risk + explanations</p></div></div></div></section>
     </main>
 
-    <footer className="border-t border-slate-800/80"><div className="mx-auto flex max-w-7xl flex-col gap-5 px-5 py-8 text-xs text-slate-500 sm:flex-row sm:items-center sm:justify-between sm:px-8 lg:px-10"><div><Logo /><p className="mt-3 max-w-sm leading-5">AI-powered email spam and phishing detection for defensive cybersecurity research.</p></div><div className="sm:text-right"><p>Project Owner</p><p className="mt-1 font-semibold text-slate-300">Kunal S. Zarodiya</p><a className="mt-3 inline-block text-cyan-300 hover:text-cyan-200" href={GITHUB_URL} target="_blank" rel="noreferrer">github.com/kszarodiya-debug/Phishzero</a></div></div></footer>
+    <footer className="relative z-10 border-t border-slate-800/80"><div className="mx-auto flex max-w-7xl flex-col gap-5 px-5 py-8 text-xs text-slate-500 sm:flex-row sm:items-center sm:justify-between sm:px-8 lg:px-10"><div><Logo /><p className="mt-3 max-w-sm leading-5">AI-powered email spam and phishing detection for defensive cybersecurity research.</p></div><div className="sm:text-right"><p>Project Owner</p><p className="mt-1 font-semibold text-slate-300">Kunal S. Zarodiya</p><a className="mt-3 inline-block text-cyan-300 hover:text-cyan-200" href={GITHUB_URL} target="_blank" rel="noreferrer">github.com/kszarodiya-debug/Phishzero</a></div></div></footer>
   </div>;
 }
