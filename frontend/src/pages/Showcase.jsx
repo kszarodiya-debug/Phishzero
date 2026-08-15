@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import PublicEmailVerifier from "../components/PublicEmailVerifier";
 
@@ -32,6 +32,9 @@ const protections = [
   "Explanations are generated only from evidence actually found.",
 ];
 
+const lifeUses = ["Banking and payment notices", "Shopping and delivery updates", "Refund and invoice messages", "Job, internship, and scholarship emails", "Account verification alerts"];
+const cyberUses = ["Phishing detection assistance", "Security awareness training", "Email triage for teams", "SOC analyst support", "Incident-response preparation"];
+
 function Icon({ name, className = "h-5 w-5" }) {
   const paths = {
     arrow: <path d="M5 12h13m-6-6 6 6-6 6" />,
@@ -50,6 +53,13 @@ function Logo() {
 }
 
 export default function Showcase() {
+  const [menuOpen, setMenuOpen] = useState(false);
+  const navItems = [["about", "About"], ["workflow", "How it works"], ["capabilities", "Features"], ["uses", "Uses"], ["verify", "Analyzer"], ["security", "Security"]];
+  function goToSection(id) {
+    setMenuOpen(false);
+    document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+
   return <div className="hacker-theme relative min-h-screen overflow-hidden bg-slate-950 text-slate-100">
     <div className="binary-overlay" aria-hidden="true">
       <span className="binary-stream binary-stream-a">1010 0110 1101 0011 0101 1110 1001 0110 0010 1100 1010 0101 1111 0001 1010 0111 1100 0011 0101 1001 0110 1110 0010 1011 0100 1101 1000 0111 1010 0011 1110 0101 1001 1100 0010 1011 0110 1111 0001 1010 0100</span>
@@ -59,17 +69,15 @@ export default function Showcase() {
     <header className="sticky top-0 z-20 border-b border-slate-800/80 bg-slate-950/85 backdrop-blur-xl">
       <div className="mx-auto flex h-20 max-w-7xl items-center justify-between px-5 sm:px-8 lg:px-10">
         <a href="#top" aria-label="PhishZero home"><Logo /></a>
-        <nav className="hidden items-center gap-8 text-sm text-slate-400 md:flex" aria-label="Primary navigation">
-          <a className="transition hover:text-white" href="#capabilities">Capabilities</a>
-          <a className="transition hover:text-white" href="#workflow">How it works</a>
-          <a className="transition hover:text-white" href="#security">Security</a>
-          <a className="transition hover:text-white" href="#verify">Verify email</a>
-        </nav>
+        <nav className="hidden items-center gap-7 text-sm text-slate-400 md:flex" aria-label="Primary navigation">{navItems.map(([id, label]) => <a key={id} className="transition hover:text-white" href={`#${id}`}>{label}</a>)}</nav>
         <div className="flex items-center gap-3">
-          <Link className="hidden rounded-full bg-cyan-300 px-4 py-2 text-xs font-bold text-slate-950 transition hover:bg-cyan-200 sm:inline-flex" to="/login">Analyze an email</Link>
+          <a className="hidden rounded-full bg-cyan-300 px-4 py-2 text-xs font-bold text-slate-950 transition hover:bg-cyan-200 sm:inline-flex" href="#verify">🚀 TRY PHISHZERO</a>
+          <Link className="hidden rounded-full border border-slate-700 px-4 py-2 text-xs font-semibold text-slate-300 transition hover:border-cyan-300/50 hover:text-cyan-200 lg:inline-flex" to="/login">Sign in</Link>
           <a className="inline-flex items-center gap-2 rounded-full border border-slate-700 px-4 py-2 text-xs font-semibold text-slate-200 transition hover:border-cyan-300/50 hover:text-cyan-200" href={GITHUB_URL} target="_blank" rel="noreferrer">View project <Icon name="arrow" className="h-4 w-4" /></a>
+          <button type="button" className="grid h-10 w-10 place-items-center rounded-xl border border-slate-700 text-slate-200 md:hidden" onClick={() => setMenuOpen((open) => !open)} aria-label={menuOpen ? "Close navigation menu" : "Open navigation menu"} aria-expanded={menuOpen}><span aria-hidden="true">{menuOpen ? "×" : "☰"}</span></button>
         </div>
       </div>
+      {menuOpen ? <div className="border-t border-slate-800 px-5 py-4 md:hidden"><div className="mx-auto grid max-w-7xl gap-2 sm:grid-cols-2">{navItems.map(([id, label]) => <button key={id} type="button" onClick={() => goToSection(id)} className="rounded-xl border border-slate-800 bg-slate-900/60 px-4 py-3 text-left text-sm text-slate-300">{label}</button>)}<Link to="/login" onClick={() => setMenuOpen(false)} className="rounded-xl border border-slate-800 bg-slate-900/60 px-4 py-3 text-left text-sm text-slate-300">Sign in</Link></div></div> : null}
     </header>
 
     <main id="top" className="relative z-10">
@@ -81,8 +89,8 @@ export default function Showcase() {
             <h1 className="max-w-3xl text-5xl font-semibold leading-[1.05] tracking-[-0.04em] text-white sm:text-6xl lg:text-7xl">See the signal behind the <span className="text-cyan-300">suspicion.</span></h1>
             <p className="mt-7 max-w-xl text-base leading-8 text-slate-400 sm:text-lg">PhishZero turns suspicious email into an evidence-led security brief—combining text, URL, and header signals without opening what you should not trust.</p>
             <div className="mt-9 flex flex-wrap gap-3">
-              <Link className="inline-flex items-center gap-2 rounded-full bg-cyan-300 px-5 py-3 text-sm font-bold text-slate-950 transition hover:bg-cyan-200" to="/login">Analyze an email <Icon name="arrow" className="h-4 w-4" /></Link>
-              <a className="inline-flex items-center gap-2 rounded-full border border-slate-700 px-5 py-3 text-sm font-semibold text-slate-200 transition hover:border-slate-500 hover:bg-slate-900" href="#security">Built defensively <Icon name="shield" className="h-4 w-4" /></a>
+              <a className="inline-flex items-center gap-2 rounded-full bg-cyan-300 px-5 py-3 text-sm font-bold text-slate-950 transition hover:bg-cyan-200" href="#verify">🚀 TRY PHISHZERO <Icon name="arrow" className="h-4 w-4" /></a>
+              <a className="inline-flex items-center gap-2 rounded-full border border-slate-700 px-5 py-3 text-sm font-semibold text-slate-200 transition hover:border-slate-500 hover:bg-slate-900" href="#about">What is PhishZero? <Icon name="shield" className="h-4 w-4" /></a>
             </div>
             <div className="mt-14 grid max-w-lg grid-cols-3 gap-5 border-t border-slate-800 pt-6">
               <div><p className="text-2xl font-semibold text-white">03</p><p className="mt-1 text-xs leading-5 text-slate-500">signal families</p></div>
@@ -105,11 +113,22 @@ export default function Showcase() {
         </div>
       </section>
 
+      <section id="about" className="mx-auto max-w-7xl scroll-mt-24 px-5 py-24 sm:px-8 lg:px-10 lg:py-32">
+        <div className="grid gap-10 lg:grid-cols-[0.85fr_1.15fr] lg:items-start">
+          <div><p className="text-xs font-bold uppercase tracking-[0.2em] text-cyan-300">About PhishZero</p><h2 className="mt-4 text-3xl font-semibold tracking-tight text-white sm:text-4xl">A practical second opinion for suspicious email.</h2><p className="mt-5 text-base leading-7 text-slate-400">Phishing messages are built to create urgency, trust, and confusion. PhishZero was created to make those signals visible before someone clicks, shares credentials, or sends money.</p></div>
+          <div className="grid gap-4 sm:grid-cols-2"><article className="rounded-2xl border border-slate-800 bg-slate-900/60 p-6"><p className="text-xs font-semibold uppercase tracking-[0.16em] text-rose-300">The problem</p><p className="mt-4 text-sm leading-7 text-slate-300">A realistic email can hide risk in its wording, links, sender details, and authentication path. People need a fast explanation, not just a binary warning.</p></article><article className="rounded-2xl border border-emerald-300/20 bg-emerald-300/5 p-6"><p className="text-xs font-semibold uppercase tracking-[0.16em] text-emerald-300">The solution</p><p className="mt-4 text-sm leading-7 text-slate-200">PhishZero combines AI-assisted text classification with passive URL and header analysis, then turns the evidence into a risk score and clear next action.</p></article></div>
+        </div>
+      </section>
+
       <PublicEmailVerifier />
 
       <section id="capabilities" className="mx-auto max-w-7xl px-5 py-24 sm:px-8 lg:px-10 lg:py-32">
         <div className="max-w-2xl"><p className="text-xs font-bold uppercase tracking-[0.2em] text-cyan-300">One message. Multiple signals.</p><h2 className="mt-4 text-3xl font-semibold tracking-tight text-white sm:text-4xl">A clearer way to review risky email.</h2><p className="mt-5 text-base leading-7 text-slate-400">PhishZero keeps the analyst in control while bringing the most useful defensive checks into one readable result.</p></div>
         <div className="mt-14 grid gap-5 lg:grid-cols-3">{features.map((feature) => <article key={feature.title} className="group rounded-3xl border border-slate-800 bg-slate-900/50 p-6 transition hover:-translate-y-1 hover:border-cyan-300/30 hover:bg-slate-900"><div className="flex items-center justify-between"><span className="grid h-11 w-11 place-items-center rounded-2xl bg-cyan-300/10 text-cyan-300 ring-1 ring-cyan-300/20"><Icon name={feature.icon} className="h-5 w-5" /></span><span className="text-[10px] font-bold tracking-[0.16em] text-slate-600">{feature.eyebrow}</span></div><h3 className="mt-8 text-xl font-semibold leading-7 text-white">{feature.title}</h3><p className="mt-4 text-sm leading-7 text-slate-400">{feature.body}</p><div className="mt-8 flex items-center gap-2 text-xs font-semibold text-cyan-300 opacity-0 transition group-hover:opacity-100">Evidence first <Icon name="arrow" className="h-4 w-4" /></div></article>)}</div>
+      </section>
+
+      <section id="uses" className="border-y border-slate-800/80 bg-slate-900/20 scroll-mt-24">
+        <div className="mx-auto max-w-7xl px-5 py-24 sm:px-8 lg:px-10 lg:py-32"><div className="max-w-2xl"><p className="text-xs font-bold uppercase tracking-[0.2em] text-emerald-300">Where it helps</p><h2 className="mt-4 text-3xl font-semibold tracking-tight text-white sm:text-4xl">Built for everyday decisions and security teams.</h2><p className="mt-5 text-base leading-7 text-slate-400">The same evidence-led workflow can support a person checking one message or a team triaging many messages during an incident.</p></div><div className="mt-12 grid gap-5 lg:grid-cols-2"><article className="rounded-3xl border border-slate-800 bg-slate-950/60 p-7"><p className="text-sm font-semibold text-white">Daily-life uses</p><div className="mt-5 grid gap-3 sm:grid-cols-2">{lifeUses.map((item) => <p key={item} className="flex gap-2 text-sm leading-6 text-slate-300"><span className="text-emerald-300">✓</span>{item}</p>)}</div></article><article className="rounded-3xl border border-slate-800 bg-slate-950/60 p-7"><p className="text-sm font-semibold text-white">Cybersecurity uses</p><div className="mt-5 grid gap-3 sm:grid-cols-2">{cyberUses.map((item) => <p key={item} className="flex gap-2 text-sm leading-6 text-slate-300"><span className="text-cyan-300">✓</span>{item}</p>)}</div></article></div></div>
       </section>
 
       <section id="workflow" className="border-y border-slate-800/80 bg-slate-900/30">
@@ -119,8 +138,15 @@ export default function Showcase() {
       <section id="security" className="mx-auto max-w-7xl px-5 py-24 sm:px-8 lg:px-10 lg:py-32"><div className="grid gap-12 lg:grid-cols-[1fr_0.9fr] lg:items-center"><div><p className="text-xs font-bold uppercase tracking-[0.2em] text-emerald-300">Defensive by design</p><h2 className="mt-4 max-w-xl text-3xl font-semibold tracking-tight text-white sm:text-4xl">The safest analysis is the one that does not open another door.</h2><div className="mt-8 space-y-4">{protections.map((protection) => <div key={protection} className="flex gap-3 text-sm leading-6 text-slate-300"><span className="mt-1 grid h-5 w-5 shrink-0 place-items-center rounded-full bg-emerald-300/10 text-emerald-300"><Icon name="check" className="h-3.5 w-3.5" /></span>{protection}</div>)}</div></div><div className="rounded-[2rem] border border-emerald-300/15 bg-emerald-300/5 p-7"><div className="flex items-center gap-3"><span className="grid h-10 w-10 place-items-center rounded-xl bg-emerald-300/10 text-emerald-300"><Icon name="spark" className="h-5 w-5" /></span><div><p className="text-sm font-semibold text-emerald-100">Authorized research only</p><p className="mt-1 text-xs text-emerald-100/60">Built for controlled defensive testing.</p></div></div><p className="mt-8 text-2xl font-semibold leading-9 text-white">Understand the threat before it becomes an incident.</p><p className="mt-4 text-sm leading-7 text-emerald-50/60">PhishZero is an AI-assisted research project, not a replacement for a security team or a verdict on its own.</p></div></div></section>
 
       <section id="architecture" className="border-t border-slate-800/80 bg-slate-900/30"><div className="mx-auto max-w-7xl px-5 py-20 sm:px-8 lg:px-10"><div className="flex flex-col justify-between gap-8 sm:flex-row sm:items-end"><div><p className="text-xs font-bold uppercase tracking-[0.2em] text-cyan-300">Built for the hackathon floor</p><h2 className="mt-4 text-3xl font-semibold tracking-tight text-white">A focused security story, backed by a real pipeline.</h2></div><a className="inline-flex items-center gap-2 text-sm font-semibold text-cyan-300 hover:text-cyan-200" href={GITHUB_URL} target="_blank" rel="noreferrer">Inspect the source <Icon name="arrow" className="h-4 w-4" /></a></div><div className="mt-12 grid gap-3 text-sm sm:grid-cols-2 lg:grid-cols-4"><div className="rounded-2xl border border-slate-800 bg-slate-950/60 p-5"><p className="text-slate-500">Frontend</p><p className="mt-2 font-semibold text-white">React · Vite · Tailwind</p></div><div className="rounded-2xl border border-slate-800 bg-slate-950/60 p-5"><p className="text-slate-500">Backend</p><p className="mt-2 font-semibold text-white">FastAPI · SQLAlchemy</p></div><div className="rounded-2xl border border-slate-800 bg-slate-950/60 p-5"><p className="text-slate-500">ML layer</p><p className="mt-2 font-semibold text-white">TF-IDF · Random Forest</p></div><div className="rounded-2xl border border-slate-800 bg-slate-950/60 p-5"><p className="text-slate-500">Decision</p><p className="mt-2 font-semibold text-white">Risk + explanations</p></div></div></div></section>
+
+      <section id="advantages" className="mx-auto max-w-7xl scroll-mt-24 px-5 py-24 sm:px-8 lg:px-10 lg:py-32"><div className="grid gap-10 lg:grid-cols-[0.8fr_1.2fr]"><div><p className="text-xs font-bold uppercase tracking-[0.2em] text-emerald-300">Why it is useful</p><h2 className="mt-4 text-3xl font-semibold tracking-tight text-white sm:text-4xl">Explainable signals beat unexplained labels.</h2><p className="mt-5 text-base leading-7 text-slate-400">PhishZero helps users learn what to notice: urgency, credential requests, URL structure, and sender trust signals. It is designed to support better decisions and security awareness.</p></div><div className="grid gap-4 sm:grid-cols-3"><div className="rounded-2xl border border-slate-800 bg-slate-900/60 p-5"><p className="text-2xl font-semibold text-emerald-300">01</p><p className="mt-4 text-sm font-semibold text-white">Passive</p><p className="mt-2 text-xs leading-5 text-slate-500">No links opened. No attachments executed.</p></div><div className="rounded-2xl border border-slate-800 bg-slate-900/60 p-5"><p className="text-2xl font-semibold text-cyan-300">02</p><p className="mt-4 text-sm font-semibold text-white">Evidence-led</p><p className="mt-2 text-xs leading-5 text-slate-500">Reasons are tied to observed signals.</p></div><div className="rounded-2xl border border-slate-800 bg-slate-900/60 p-5"><p className="text-2xl font-semibold text-violet-300">03</p><p className="mt-4 text-sm font-semibold text-white">Actionable</p><p className="mt-2 text-xs leading-5 text-slate-500">Every result suggests a safer next step.</p></div></div></div></section>
+
+      <section id="future" className="border-y border-slate-800/80 bg-slate-900/30"><div className="mx-auto max-w-7xl px-5 py-20 sm:px-8 lg:px-10"><div className="grid gap-8 sm:grid-cols-[0.8fr_1.2fr] sm:items-center"><div><p className="text-xs font-bold uppercase tracking-[0.2em] text-cyan-300">Future scope</p><h2 className="mt-4 text-3xl font-semibold tracking-tight text-white">A foundation for safer email operations.</h2></div><div className="grid gap-3 text-sm text-slate-300 sm:grid-cols-2"><p className="rounded-xl border border-slate-800 bg-slate-950/50 px-4 py-3">Team workspaces and analyst feedback</p><p className="rounded-xl border border-slate-800 bg-slate-950/50 px-4 py-3">Calibrated models with larger datasets</p><p className="rounded-xl border border-slate-800 bg-slate-950/50 px-4 py-3">Enterprise mail gateway integrations</p><p className="rounded-xl border border-slate-800 bg-slate-950/50 px-4 py-3">Stronger multilingual awareness support</p></div></div></div></section>
+
+      <section id="disclaimer" className="mx-auto max-w-7xl scroll-mt-24 px-5 py-20 sm:px-8 lg:px-10"><div className="rounded-3xl border border-amber-300/20 bg-amber-300/5 p-7 sm:p-9"><p className="text-xs font-bold uppercase tracking-[0.2em] text-amber-200">Security disclaimer</p><h2 className="mt-4 text-2xl font-semibold text-white">Decision support, not a guarantee.</h2><p className="mt-4 max-w-4xl text-sm leading-7 text-amber-50/75">PhishZero is a decision-support and cybersecurity awareness tool. Automated analysis is not a 100% guarantee. Verify suspicious messages through trusted channels and never provide passwords or sensitive information to suspicious emails.</p></div></section>
     </main>
 
     <footer className="relative z-10 border-t border-slate-800/80"><div className="mx-auto flex max-w-7xl flex-col gap-5 px-5 py-8 text-xs text-slate-500 sm:flex-row sm:items-center sm:justify-between sm:px-8 lg:px-10"><div><Logo /><p className="mt-3 max-w-sm leading-5">AI-powered email spam and phishing detection for defensive cybersecurity research.</p></div><div className="sm:text-right"><p>Project Owner</p><p className="mt-1 font-semibold text-slate-300">Kunal S. Zarodiya</p><a className="mt-3 inline-block text-cyan-300 hover:text-cyan-200" href={GITHUB_URL} target="_blank" rel="noreferrer">github.com/kszarodiya-debug/Phishzero</a></div></div></footer>
   </div>;
 }
+

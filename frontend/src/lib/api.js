@@ -1,9 +1,10 @@
 import axios from "axios";
 
 const TOKEN_KEY = "phishguard_access_token";
+const defaultApiBaseUrl = import.meta.env.PROD ? "" : "http://localhost:8000";
 
 export const api = axios.create({
-  baseURL: import.meta.env.VITE_API_URL || "http://localhost:8000",
+  baseURL: import.meta.env.VITE_API_URL || defaultApiBaseUrl,
   headers: { "Content-Type": "application/json" },
 });
 
@@ -39,3 +40,4 @@ export function getApiError(error, fallback = "Something went wrong. Please try 
   }
   return typeof detail === "string" ? detail : fallback;
 }
+
