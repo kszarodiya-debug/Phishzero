@@ -15,6 +15,7 @@ from starlette.types import Message, Receive, Scope, Send
 from app.api.analysis import router as analysis_router
 from app.api.auth import router as auth_router
 from app.api.emails import router as emails_router
+from app.api.public_analysis import router as public_analysis_router
 from app.core.config import get_frontend_origins, get_jwt_settings, get_max_request_bytes
 from app.core.rate_limit import InMemoryRateLimiter
 
@@ -42,6 +43,9 @@ class SecurityMiddleware:
         self.window_seconds = _positive_int("RATE_LIMIT_WINDOW_SECONDS", 60, maximum=3600)
         self.auth_limit = _positive_int("RATE_LIMIT_AUTH_REQUESTS", 30, maximum=10_000)
         self.api_limit = _positive_int("RATE_LIMIT_API_REQUESTS", 120, maximum=100_000)
+        self.public_analysis_limit = _positive_int(
+            "RATE_LIMIT_PUBLIC_ANALYSIS_REQUESTS", 20, maximum=10_000
+        )
         self.rate_limiter = InMemoryRateLimiter()
 
     async def __call__(self, scope: Scope, receive: Receive, send: Send) -> None:
@@ -115,6 +119,8 @@ class SecurityMiddleware:
         path = scope.get("path", "")
         if path in {"/api/auth/login", "/api/auth/register"}:
             return self.auth_limit
+        if path == "/api/public/analysis":
+            return self.public_analysis_limit
         if path in {"/api/emails", "/api/analysis"}:
             return self.api_limit
         return None
@@ -152,6 +158,7 @@ app.add_middleware(SecurityMiddleware)
 app.include_router(auth_router)
 app.include_router(emails_router)
 app.include_router(analysis_router)
+app.include_router(public_analysis_router)
 
 
 @app.exception_handler(Exception)

@@ -32,6 +32,8 @@ jobs:
 
       - name: Build static showcase
         working-directory: frontend
+        env:
+          VITE_API_URL: ${{ vars.VITE_API_URL }}
         run: npm run build:pages
 
       - name: Configure Pages

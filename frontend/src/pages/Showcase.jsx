@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import PublicEmailVerifier from "../components/PublicEmailVerifier";
 
 const GITHUB_URL = "https://github.com/kszarodiya-debug/Phishzero";
 
@@ -62,6 +63,7 @@ export default function Showcase() {
           <a className="transition hover:text-white" href="#capabilities">Capabilities</a>
           <a className="transition hover:text-white" href="#workflow">How it works</a>
           <a className="transition hover:text-white" href="#security">Security</a>
+          <a className="transition hover:text-white" href="#verify">Verify email</a>
         </nav>
         <div className="flex items-center gap-3">
           <Link className="hidden rounded-full bg-cyan-300 px-4 py-2 text-xs font-bold text-slate-950 transition hover:bg-cyan-200 sm:inline-flex" to="/login">Analyze an email</Link>
@@ -102,6 +104,8 @@ export default function Showcase() {
           </div>
         </div>
       </section>
+
+      <PublicEmailVerifier />
 
       <section id="capabilities" className="mx-auto max-w-7xl px-5 py-24 sm:px-8 lg:px-10 lg:py-32">
         <div className="max-w-2xl"><p className="text-xs font-bold uppercase tracking-[0.2em] text-cyan-300">One message. Multiple signals.</p><h2 className="mt-4 text-3xl font-semibold tracking-tight text-white sm:text-4xl">A clearer way to review risky email.</h2><p className="mt-5 text-base leading-7 text-slate-400">PhishZero keeps the analyst in control while bringing the most useful defensive checks into one readable result.</p></div>
