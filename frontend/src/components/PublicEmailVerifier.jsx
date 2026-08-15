@@ -8,6 +8,30 @@ const spamDemoForm = {
   body: "Your account will be suspended today. Click http://198.51.100.24/verify and enter your password to keep access.",
   headers: "Authentication-Results: mx.example; spf=fail; dkim=fail; dmarc=fail",
 };
+const spamDemoResult = {
+  classification: "PHISHING",
+  security_type: "UNSAFE",
+  risk_score: 96,
+  confidence: 0.98,
+  text_score: 92,
+  url_score: 98,
+  header_score: 95,
+  analyzed_urls: ["http://198.51.100.24/verify"],
+  model_version: "controlled-demo-v1",
+  summary: "This controlled demo email shows multiple phishing indicators.",
+  reasons: [
+    "Urgent account language pressures the recipient to act immediately.",
+    "The message requests a password after directing the recipient to a link.",
+    "The URL uses an IP address and plain HTTP instead of a trusted domain.",
+    "The supplied demo headers show SPF, DKIM, and DMARC failures.",
+  ],
+  recommended_actions: [
+    "Do not click the suspicious link.",
+    "Do not submit credentials.",
+    "Verify the sender through an independent official channel.",
+  ],
+  isDemo: true,
+};
 const tones = {
   SAFE: "border-emerald-400/30 bg-emerald-400/10 text-emerald-100",
   LOW_RISK: "border-cyan-400/30 bg-cyan-400/10 text-cyan-100",
@@ -55,7 +79,12 @@ export default function PublicEmailVerifier() {
       setResult(data);
       setState({ loading: false, error: "" });
     } catch (error) {
-      setState({ loading: false, error: getApiError(error, "The verification service is unavailable right now.") });
+      if (demoLoaded) {
+        setResult(spamDemoResult);
+        setState({ loading: false, error: "" });
+      } else {
+        setState({ loading: false, error: getApiError(error, "The verification service is unavailable right now.") });
+      }
     }
   }
 
@@ -96,6 +125,7 @@ function Field({ label, ...props }) {
 function Feedback({ result }) {
   const tone = tones[result.classification] || tones.LOW_RISK;
   return <div className={`mt-6 rounded-2xl border p-5 ${tone}`} aria-live="polite">
+    {result.isDemo ? <p className="mb-4 rounded-lg border border-cyan-200/20 bg-cyan-200/10 px-3 py-2 text-xs leading-5 text-cyan-100">Controlled demo output shown because the live backend is unavailable. No URL was visited and no email was sent.</p> : null}
     <div className="flex flex-wrap items-start justify-between gap-3"><div><p className="text-[10px] font-bold uppercase tracking-[0.18em] opacity-70">Verification feedback</p><p className="mt-2 text-xl font-semibold">{formatSecurityType(result.security_type)}</p><p className="mt-1 text-xs opacity-70">Classification: {result.classification.replace("_", " ")}</p></div><p className="text-right text-sm font-semibold">Risk {Math.round(result.risk_score)}/100<br /><span className="text-xs opacity-70">{Math.round(result.confidence * 100)}% confidence</span></p></div>
     <p className="mt-4 text-sm leading-6 opacity-90">{result.summary}</p>
     {result.reasons?.length ? <div className="mt-4"><p className="text-xs font-bold uppercase tracking-[0.14em] opacity-70">Why</p><ul className="mt-2 space-y-1 text-sm">{result.reasons.slice(0, 5).map((reason) => <li key={reason}>• {reason}</li>)}</ul></div> : null}
