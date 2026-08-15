@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const GITHUB_URL = "https://github.com/kszarodiya-debug/Phishzero";
 
@@ -62,7 +63,10 @@ export default function Showcase() {
           <a className="transition hover:text-white" href="#workflow">How it works</a>
           <a className="transition hover:text-white" href="#security">Security</a>
         </nav>
-        <a className="inline-flex items-center gap-2 rounded-full border border-slate-700 px-4 py-2 text-xs font-semibold text-slate-200 transition hover:border-cyan-300/50 hover:text-cyan-200" href={GITHUB_URL} target="_blank" rel="noreferrer">View project <Icon name="arrow" className="h-4 w-4" /></a>
+        <div className="flex items-center gap-3">
+          <Link className="hidden rounded-full bg-cyan-300 px-4 py-2 text-xs font-bold text-slate-950 transition hover:bg-cyan-200 sm:inline-flex" to="/login">Analyze an email</Link>
+          <a className="inline-flex items-center gap-2 rounded-full border border-slate-700 px-4 py-2 text-xs font-semibold text-slate-200 transition hover:border-cyan-300/50 hover:text-cyan-200" href={GITHUB_URL} target="_blank" rel="noreferrer">View project <Icon name="arrow" className="h-4 w-4" /></a>
+        </div>
       </div>
     </header>
 
@@ -75,7 +79,7 @@ export default function Showcase() {
             <h1 className="max-w-3xl text-5xl font-semibold leading-[1.05] tracking-[-0.04em] text-white sm:text-6xl lg:text-7xl">See the signal behind the <span className="text-cyan-300">suspicion.</span></h1>
             <p className="mt-7 max-w-xl text-base leading-8 text-slate-400 sm:text-lg">PhishZero turns suspicious email into an evidence-led security brief—combining text, URL, and header signals without opening what you should not trust.</p>
             <div className="mt-9 flex flex-wrap gap-3">
-              <a className="inline-flex items-center gap-2 rounded-full bg-cyan-300 px-5 py-3 text-sm font-bold text-slate-950 transition hover:bg-cyan-200" href="#workflow">Explore the detection flow <Icon name="arrow" className="h-4 w-4" /></a>
+              <Link className="inline-flex items-center gap-2 rounded-full bg-cyan-300 px-5 py-3 text-sm font-bold text-slate-950 transition hover:bg-cyan-200" to="/login">Analyze an email <Icon name="arrow" className="h-4 w-4" /></Link>
               <a className="inline-flex items-center gap-2 rounded-full border border-slate-700 px-5 py-3 text-sm font-semibold text-slate-200 transition hover:border-slate-500 hover:bg-slate-900" href="#security">Built defensively <Icon name="shield" className="h-4 w-4" /></a>
             </div>
             <div className="mt-14 grid max-w-lg grid-cols-3 gap-5 border-t border-slate-800 pt-6">
