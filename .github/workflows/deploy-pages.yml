@@ -36,6 +36,10 @@ jobs:
           VITE_API_URL: ${{ vars.VITE_API_URL }}
         run: npm run build:pages
 
+      - name: Add SPA fallback for client-side routes
+        working-directory: frontend
+        run: cp dist/index.html dist/404.html
+
       - name: Configure Pages
         uses: actions/configure-pages@v5
 
@@ -54,3 +58,4 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+
