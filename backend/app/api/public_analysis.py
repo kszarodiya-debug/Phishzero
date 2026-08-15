@@ -15,6 +15,7 @@ from app.schemas.public_analysis import (
 from app.services.email_parser import parse_manual_email
 from app.services.explanation_engine import generate_explanation
 from app.services.risk_engine import assess_risk
+from app.services.security_type import security_type_for
 
 
 router = APIRouter(prefix="/api/public", tags=["public-analysis"])
@@ -40,6 +41,7 @@ def verify_email(payload: PublicAnalysisRequest) -> PublicAnalysisResponse:
 
     return PublicAnalysisResponse(
         classification=classification,
+        security_type=security_type_for(classification),
         risk_score=_number(risk_result.get("score"), maximum=100),
         confidence=_number(risk_result.get("confidence"), maximum=1),
         text_score=_component_score(component_scores, "text"),
@@ -106,3 +108,4 @@ def _number(value: Any, *, maximum: float) -> float:
     except (TypeError, ValueError):
         return 0.0
     return min(max(number, 0.0), maximum)
+

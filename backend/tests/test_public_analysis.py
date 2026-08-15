@@ -58,6 +58,7 @@ def test_public_analysis_returns_feedback_without_authentication(
     assert response.status_code == 200
     result = response.json()
     assert result["classification"] == "PHISHING"
+    assert result["security_type"] == "UNSAFE"
     assert result["risk_score"] == 82.5
     assert result["text_score"] == 88
     assert result["analyzed_urls"] == ["https://example.com/verify"]
@@ -73,3 +74,4 @@ def test_public_analysis_validates_input_without_authentication(client: TestClie
     response = client.post("/api/public/analysis", json=payload)
 
     assert response.status_code == 422
+

@@ -19,6 +19,7 @@ from app.schemas.analysis import AnalysisRequest, AnalysisResponse, ThreatRespon
 from app.services.email_parser import ParsedEmail, parse_manual_email
 from app.services.explanation_engine import ExplanationResult, generate_explanation
 from app.services.risk_engine import assess_risk
+from app.services.security_type import security_type_for
 
 
 router = APIRouter(prefix="/api/analysis", tags=["analysis"])
@@ -192,6 +193,7 @@ def _to_response(analysis: Analysis, risk_result: dict[str, Any]) -> AnalysisRes
     return AnalysisResponse(
         analysis_id=analysis.id,
         classification=classification,
+        security_type=security_type_for(classification),
         risk_score=float(analysis.risk_score or 0),
         confidence=float(analysis.confidence or 0),
         text_score=_component_score(component_scores, "text"),
@@ -352,3 +354,4 @@ def _decimal_or_none(value: Any, *, maximum: float, divisor: float = 1) -> Decim
     if numeric is None:
         return None
     return Decimal(str(min(max(numeric / divisor, 0), maximum / divisor)))
+

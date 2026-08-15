@@ -124,6 +124,7 @@ def test_successful_analysis_persists_and_returns_results(
     result = response.json()
     assert result["analysis_id"] > 0
     assert result["classification"] == "PHISHING"
+    assert result["security_type"] == "UNSAFE"
     assert result["risk_score"] == 82.5
     assert result["confidence"] == 0.91
     assert result["text_score"] == 88
@@ -207,3 +208,4 @@ def test_history_returns_only_current_users_records(
     assert len(owner_history.json()) == 2
     assert other_history.status_code == 200
     assert other_history.json() == []
+
