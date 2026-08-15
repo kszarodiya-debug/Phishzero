@@ -20,6 +20,11 @@ body {
   background: #020617;
 }
 
+.bg-grid {
+  background-image: linear-gradient(rgba(148, 163, 184, 0.045) 1px, transparent 1px), linear-gradient(90deg, rgba(148, 163, 184, 0.045) 1px, transparent 1px);
+  background-size: 42px 42px;
+}
+
 button,
 input,
 textarea {
